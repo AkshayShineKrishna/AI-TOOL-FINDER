@@ -16,7 +16,7 @@ public class AITool {
     private String category;
 
     private PricingType pricingType;
-    private double averageRating;
+    private Double averageRating;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -29,7 +29,7 @@ public class AITool {
     }
 
     public AITool(String id, String name, String useCase, String category,
-                  PricingType pricingType, double averageRating,
+                  PricingType pricingType, Double averageRating,
                   LocalDateTime createdAt, LocalDateTime updatedAt) {
 
         this.id = id;
@@ -101,7 +101,7 @@ public class AITool {
         return averageRating;
     }
 
-    public void setAverageRating(double averageRating) {
+    public void setAverageRating(Double averageRating) {
         this.averageRating = averageRating;
     }
 
