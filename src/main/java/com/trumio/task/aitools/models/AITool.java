@@ -1,6 +1,8 @@
 package com.trumio.task.aitools.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AITool {
 
@@ -13,6 +15,8 @@ public class AITool {
     private double averageRating;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<Review> reviews;
+
 
     public AITool() {
         this.createdAt = LocalDateTime.now();
@@ -30,6 +34,7 @@ public class AITool {
         this.averageRating = averageRating;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.reviews=new ArrayList<>();
     }
 
     public String getId() {
@@ -98,5 +103,13 @@ public class AITool {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }
