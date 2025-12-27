@@ -15,11 +15,15 @@ import java.util.List;
 @Component
 public class CmdRunner implements CommandLineRunner {
 
-    @Autowired
-    private AIToolRepository aiToolRepository;
 
-    @Autowired
-    private ReviewRepository reviewRepository;
+    private final AIToolRepository aiToolRepository;
+
+    private final ReviewRepository reviewRepository;
+
+    CmdRunner(AIToolRepository aiToolRepository,ReviewRepository repository){
+        this.aiToolRepository =aiToolRepository;
+        this.reviewRepository = repository;
+    }
 
     @Override
     public void run(String... args) throws Exception {
