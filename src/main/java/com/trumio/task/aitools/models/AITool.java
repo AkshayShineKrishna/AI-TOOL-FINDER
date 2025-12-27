@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "ai_tools")
 public class AITool {
-     @Id
+    @Id
     private String id;
     private String name;
     private String useCase;
