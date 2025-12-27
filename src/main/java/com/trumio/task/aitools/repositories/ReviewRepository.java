@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.trumio.task.aitools.models.Review;
 
 public interface ReviewRepository extends MongoRepository<Review, String> {
-
+    boolean existsByToolId(String toolId);
     List<Review> findByToolId(String toolId);
 }
