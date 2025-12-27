@@ -1,26 +1,21 @@
 package com.trumio.task.aitools.controller.admin;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.trumio.task.aitools.services.adminAuth.AdminAuthServices;
+import org.springframework.web.bind.annotation.*;
 
 import com.trumio.task.aitools.models.AITool;
-import com.trumio.task.aitools.services.AdminServices;
-// import com.trumio.task.aitools.util.AdminAuthUtil;
+import com.trumio.task.aitools.services.adminManagement.AdminManagementServices;
 
 @RestController
 @RequestMapping("/admin/tools")
 public class AdminToolController {
 
-    private final AdminServices adminServices;
+    private final AdminManagementServices adminManagementServices;
+    private final AdminAuthServices adminAuthServices;
 
-    public AdminToolController(AdminServices adminServices) {
-        this.adminServices = adminServices;
+    public AdminToolController(AdminManagementServices adminManagementServices, AdminAuthServices adminAuthServices) {
+        this.adminManagementServices = adminManagementServices;
+        this.adminAuthServices = adminAuthServices;
     }
 
     // ADD TOOL (JSON)
@@ -29,10 +24,9 @@ public class AdminToolController {
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @RequestBody AITool tool) {
 
-        // X-ADMIN-KEY : admin123
-        AdminAuthUtil.checkAdmin(adminKey);
+        adminAuthServices.checkAdmin(adminKey);
 
-        return adminServices.addTool(
+        return adminManagementServices.addTool(
                 tool.getName(),
                 tool.getUseCase(),
                 tool.getCategory(),
@@ -40,16 +34,16 @@ public class AdminToolController {
         );
     }
 
-    // UPDATE TOOL (JSON, partial allowed)
-    @PutMapping("/{id}")
+
+    @PatchMapping("/{id}")
     public AITool updateTool(
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @PathVariable String id,
             @RequestBody AITool tool) {
 
-        AdminAuthUtil.checkAdmin(adminKey);
+        adminAuthServices.checkAdmin(adminKey);
 
-        return adminServices.updateTool(
+        return adminManagementServices.updateTool(
                 id,
                 tool.getName(),
                 tool.getUseCase(),
@@ -64,9 +58,9 @@ public class AdminToolController {
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @PathVariable String id) {
 
-        AdminAuthUtil.checkAdmin(adminKey);
+        adminAuthServices.checkAdmin(adminKey);
 
-        adminServices.removeTool(id);
+        adminManagementServices.removeTool(id);
         return "Tool removed successfully";
     }
 }

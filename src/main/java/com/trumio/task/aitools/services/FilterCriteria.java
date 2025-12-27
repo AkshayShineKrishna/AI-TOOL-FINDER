@@ -49,26 +49,23 @@ public class FilterCriteria {
         return this;
     }
 
-    // ---------- Helper methods (IMPORTANT) ----------
-
     public boolean hasCategory() {
         return category != null && !category.isBlank();
     }
 
     public boolean hasPricingType() {
+
         return pricingType != null;
     }
 
     public boolean hasMinRating() {
+
         return minRating != null;
     }
 
     public boolean hasMaxRating() {
-        return maxRating != null;
-    }
 
-    public boolean hasRatingRange() {
-        return minRating != null || maxRating != null;
+        return maxRating != null;
     }
 
     public boolean hasAnyFilter() {

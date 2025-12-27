@@ -23,10 +23,7 @@ public class AITool {
 
     // ---------- Constructors ----------
 
-    public AITool() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
+    public AITool() {}
 
     public AITool(String id, String name, String useCase, String category,
                   PricingType pricingType, Double averageRating,
