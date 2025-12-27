@@ -9,27 +9,34 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "ai_tools")
 public class AITool {
+
     @Id
     private String id;
+
     private String name;
     private String useCase;
     private String category;
 
     private PricingType pricingType;
     private double averageRating;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
     private List<Review> reviews;
 
+    // ---------- Constructors ----------
 
     public AITool() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.reviews = new ArrayList<>();
     }
 
     public AITool(String id, String name, String useCase, String category,
                   PricingType pricingType, double averageRating,
                   LocalDateTime createdAt, LocalDateTime updatedAt) {
+
         this.id = id;
         this.name = name;
         this.useCase = useCase;
@@ -38,8 +45,10 @@ public class AITool {
         this.averageRating = averageRating;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.reviews=new ArrayList<>();
+        this.reviews = new ArrayList<>();
     }
+
+    // ---------- Getters & Setters ----------
 
     public String getId() {
         return id;
@@ -47,6 +56,7 @@ public class AITool {
 
     public void setId(String id) {
         this.id = id;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String getName() {
@@ -55,7 +65,7 @@ public class AITool {
 
     public void setName(String name) {
         this.name = name;
-        this.updatedAt = LocalDateTime.now(); // optional but good practice
+        this.updatedAt = LocalDateTime.now();
     }
 
     public String getUseCase() {
@@ -89,7 +99,7 @@ public class AITool {
         return averageRating;
     }
 
-    public void setAverageRating(double averageRating) {
+    private void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
 
@@ -97,16 +107,8 @@ public class AITool {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public List<Review> getReviews() {
@@ -115,5 +117,33 @@ public class AITool {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+        recalculateAverageRating();
+    }
+
+    // ---------- Business Logic ----------
+
+    /**
+     * Recalculates average rating using only APPROVED reviews.
+     * Should be called after review approval/rejection.
+     */
+    public void recalculateAverageRating() {
+
+        if (reviews == null || reviews.isEmpty()) {
+            setAverageRating(0.0);
+            return;
+        }
+
+        double sum = 0.0;
+        int count = 0;
+
+        for (Review review : reviews) {
+            if (review.isApproved()) {
+                sum += review.getRating();
+                count++;
+            }
+        }
+
+        setAverageRating(count == 0 ? 0.0 : sum / count);
+        this.updatedAt = LocalDateTime.now();
     }
 }

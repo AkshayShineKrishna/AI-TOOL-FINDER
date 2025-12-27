@@ -7,8 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "reviews")
 public class Review {
+
     @Id
     private String id;
+
     private String toolId;
     private int rating; // 1–5
     private String comment;
@@ -30,6 +32,8 @@ public class Review {
         this.status = status;
         this.createdAt = createdAt;
     }
+
+    // ---------- Getters & Setters ----------
 
     public String getId() {
         return id;
@@ -77,5 +81,14 @@ public class Review {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    // ---------- Helper Method ----------
+
+    /**
+     * @return true if review is approved by admin
+     */
+    public boolean isApproved() {
+        return this.status == ReviewStatus.APPROVED;
     }
 }
