@@ -1,4 +1,4 @@
-package com.trumio.task.aitools.services;
+package com.trumio.task.aitools.services.userServices;
 
 import com.trumio.task.aitools.exceptions.InvalidReviewException;
 import com.trumio.task.aitools.models.AITool;
@@ -6,7 +6,6 @@ import com.trumio.task.aitools.models.Review;
 import com.trumio.task.aitools.models.ReviewStatus;
 import com.trumio.task.aitools.repositories.AIToolRepository;
 import com.trumio.task.aitools.repositories.ReviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,7 +36,6 @@ public class UserServicesImpl implements UserServices {
 
     @Override
     public void addReview(Review review) {
-
         List<String> errors = new ArrayList<>();
 
         if (review == null) {
@@ -51,6 +49,11 @@ public class UserServicesImpl implements UserServices {
             errors.add("Tool with given ID does not exist");
         }
 
+        if(review.getRating() == null){
+            errors.add("Rating cannot be empty");
+            throw new InvalidReviewException(errors);
+        }
+
         if (review.getRating() < 1 || review.getRating() > 5) {
             errors.add("Rating must be between 1 and 5");
         }
@@ -58,6 +61,7 @@ public class UserServicesImpl implements UserServices {
         if (!errors.isEmpty()) {
             throw new InvalidReviewException(errors);
         }
+
         review.setCreatedAt(LocalDateTime.now());
         review.setStatus(ReviewStatus.PENDING);
         reviewRepository.save(review);

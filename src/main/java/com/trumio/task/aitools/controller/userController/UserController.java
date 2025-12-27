@@ -1,12 +1,11 @@
-package com.trumio.task.aitools.controller;
+package com.trumio.task.aitools.controller.userController;
 
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.PricingType;
 import com.trumio.task.aitools.models.Review;
 import com.trumio.task.aitools.services.FilterCriteria;
 import com.trumio.task.aitools.services.FilterService;
-import com.trumio.task.aitools.services.UserServices;
-import com.trumio.task.aitools.services.UserServicesImpl;
+import com.trumio.task.aitools.services.userServices.UserServicesImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class Controller {
+public class UserController {
 
     private final UserServicesImpl userServices;
     private final FilterService filterService;
 
-    public Controller(UserServicesImpl userServices, FilterService filterService) {
+    public UserController(UserServicesImpl userServices, FilterService filterService) {
         this.userServices = userServices;
         this.filterService = filterService;
     }
