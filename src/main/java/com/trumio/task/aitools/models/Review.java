@@ -12,7 +12,7 @@ public class Review {
     private String id;
 
     private String toolId;
-    private int rating; // 1–5
+    private Integer rating; // 1–5
     private String comment;
     private ReviewStatus status;
     private LocalDateTime createdAt;
@@ -22,7 +22,7 @@ public class Review {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Review(String id, String toolId, int rating,
+    public Review(String id, String toolId, Integer rating,
                   String comment, ReviewStatus status,
                   LocalDateTime createdAt) {
         this.id = id;
@@ -51,7 +51,7 @@ public class Review {
         this.toolId = toolId;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
