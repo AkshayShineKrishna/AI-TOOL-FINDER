@@ -1,7 +1,9 @@
 package com.trumio.task.aitools.services;
 
 import com.trumio.task.aitools.models.PricingType;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FilterCriteria {
 
     private String category;
@@ -68,4 +70,12 @@ public class FilterCriteria {
     public boolean hasRatingRange() {
         return minRating != null || maxRating != null;
     }
+
+    public boolean hasAnyFilter() {
+        return hasCategory()
+                || hasPricingType()
+                || hasMinRating()
+                || hasMaxRating();
+    }
+
 }

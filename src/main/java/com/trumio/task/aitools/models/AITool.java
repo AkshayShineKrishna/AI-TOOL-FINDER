@@ -23,14 +23,11 @@ public class AITool {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Review> reviews;
-
     // ---------- Constructors ----------
 
     public AITool() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.reviews = new ArrayList<>();
     }
 
     public AITool(String id, String name, String useCase, String category,
@@ -45,7 +42,6 @@ public class AITool {
         this.averageRating = averageRating;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.reviews = new ArrayList<>();
     }
 
     // ---------- Getters & Setters ----------
@@ -111,39 +107,4 @@ public class AITool {
         return updatedAt;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-        recalculateAverageRating();
-    }
-
-    // ---------- Business Logic ----------
-
-    /**
-     * Recalculates average rating using only APPROVED reviews.
-     * Should be called after review approval/rejection.
-     */
-    public void recalculateAverageRating() {
-
-        if (reviews == null || reviews.isEmpty()) {
-            setAverageRating(0.0);
-            return;
-        }
-
-        double sum = 0.0;
-        int count = 0;
-
-        for (Review review : reviews) {
-            if (review.isApproved()) {
-                sum += review.getRating();
-                count++;
-            }
-        }
-
-        setAverageRating(count == 0 ? 0.0 : sum / count);
-        this.updatedAt = LocalDateTime.now();
-    }
 }
