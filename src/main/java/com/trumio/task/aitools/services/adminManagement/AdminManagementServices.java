@@ -1,18 +1,14 @@
-package com.trumio.task.aitools.services;
+package com.trumio.task.aitools.services.adminManagement;
 
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.PricingType;
 
-public interface AdminServices {
-//    add new tools
-//    view all reviews
-//update review sts
-AITool addTool(String name, String useCase,
+public interface AdminManagementServices {
+    AITool addTool(String name, String useCase,
                    String category, PricingType pricingType);
 
     AITool updateTool(String id, String name,
                       String useCase, String category,
                       PricingType pricingType);
- void removeTool(String id);
-//
+    void removeTool(String id);
 }
