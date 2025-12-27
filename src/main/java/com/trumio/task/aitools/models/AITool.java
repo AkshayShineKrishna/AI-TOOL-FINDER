@@ -99,7 +99,7 @@ public class AITool {
         return averageRating;
     }
 
-    private void setAverageRating(double averageRating) {
+    public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
 
@@ -145,5 +145,10 @@ public class AITool {
 
         setAverageRating(count == 0 ? 0.0 : sum / count);
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void setCreatedAt(LocalDateTime now) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setCreatedAt'");
     }
 }
