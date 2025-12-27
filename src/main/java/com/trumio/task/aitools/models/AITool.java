@@ -1,8 +1,6 @@
 package com.trumio.task.aitools.models;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -91,11 +89,19 @@ public class AITool {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public double getAverageRating() {
         return averageRating;
     }
 
-    private void setAverageRating(double averageRating) {
+    public void setAverageRating(double averageRating) {
         this.averageRating = averageRating;
     }
 
