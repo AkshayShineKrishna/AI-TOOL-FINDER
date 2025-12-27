@@ -8,6 +8,8 @@ public class AitoolsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AitoolsApplication.class, args);
+	
 	}
+
 
 }

@@ -2,8 +2,12 @@ package com.trumio.task.aitools.models;
 
 import java.time.LocalDateTime;
 
-public class Review {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "reviews")
+public class Review {
+    @Id
     private String id;
     private String toolId;
     private int rating; // 1–5
