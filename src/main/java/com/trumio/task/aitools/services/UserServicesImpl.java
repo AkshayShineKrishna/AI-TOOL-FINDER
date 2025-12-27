@@ -3,11 +3,13 @@ package com.trumio.task.aitools.services;
 import com.trumio.task.aitools.exceptions.InvalidReviewException;
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.Review;
+import com.trumio.task.aitools.models.ReviewStatus;
 import com.trumio.task.aitools.repositories.AIToolRepository;
 import com.trumio.task.aitools.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +58,8 @@ public class UserServicesImpl implements UserServices {
         if (!errors.isEmpty()) {
             throw new InvalidReviewException(errors);
         }
-
+        review.setCreatedAt(LocalDateTime.now());
+        review.setStatus(ReviewStatus.PENDING);
         reviewRepository.save(review);
     }
 }

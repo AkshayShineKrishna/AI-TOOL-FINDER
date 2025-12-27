@@ -47,7 +47,7 @@ public class Controller {
         // 🔹 Otherwise apply filters
         return filterService.filter(criteria);
     }
-    @GetMapping("tools/{id}")
+    @GetMapping("/tools/{id}")
     public Optional<AITool> getToolsById(@PathVariable String id){
         return userServices.retrievebyid(id);
     }
