@@ -34,7 +34,7 @@ public class AITool {
         this.useCase = useCase;
         this.category = category;
         this.pricingType = pricingType;
-        this.averageRating = averageRating;
+        this.averageRating = 0D;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
