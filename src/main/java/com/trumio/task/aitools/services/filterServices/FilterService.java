@@ -1,4 +1,5 @@
-package com.trumio.task.aitools.services;
+package com.trumio.task.aitools.services.filterServices;
+
 import com.trumio.task.aitools.models.AITool;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -36,6 +37,10 @@ public class FilterService {
         if (c.getMinRating() != null) {
             criteriaList.add(Criteria.where("averageRating")
                     .gte(c.getMinRating()));
+        }
+
+        if (c.getMaxRating() != null) {
+            criteriaList.add(Criteria.where("averageRating").lte(c.getMaxRating()));
         }
 
         if (!criteriaList.isEmpty()) {

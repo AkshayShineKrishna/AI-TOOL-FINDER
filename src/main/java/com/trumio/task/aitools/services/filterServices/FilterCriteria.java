@@ -1,4 +1,4 @@
-package com.trumio.task.aitools.services;
+package com.trumio.task.aitools.services.filterServices;
 
 import com.trumio.task.aitools.models.PricingType;
 import org.springframework.stereotype.Service;
