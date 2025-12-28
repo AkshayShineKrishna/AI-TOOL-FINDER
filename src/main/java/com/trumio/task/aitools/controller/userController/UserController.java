@@ -1,17 +1,17 @@
 package com.trumio.task.aitools.controller.userController;
 
+import com.trumio.task.aitools.exceptions.InvalidEnumException;
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.PricingType;
 import com.trumio.task.aitools.models.Review;
-import com.trumio.task.aitools.services.FilterCriteria;
-import com.trumio.task.aitools.services.FilterService;
+import com.trumio.task.aitools.services.filterServices.FilterCriteria;
+import com.trumio.task.aitools.services.filterServices.FilterService;
 import com.trumio.task.aitools.services.userServices.UserServicesImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -25,30 +25,40 @@ public class UserController {
     }
 
     @GetMapping("/tools")
-    public List<AITool> getAllAiToolsData(
+    public ResponseEntity<List<AITool>> getAllAiToolsData(
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) PricingType pricingType,
+            @RequestParam(required = false) String pricingType,
             @RequestParam(required = false) Double minRating,
             @RequestParam(required = false) Double maxRating
     ) {
+        PricingType pricingEnum;
+        if(pricingType.equalsIgnoreCase("FREE")){
+            pricingEnum = PricingType.FREE;
+        } else if (pricingType.equalsIgnoreCase("PAID")) {
+            pricingEnum = PricingType.PAID;
+        } else if (pricingType.equalsIgnoreCase("SUBSCRIPTION")) {
+            pricingEnum = PricingType.SUBSCRIPTION;
+        }else {
+            throw new InvalidEnumException("Invalid ENUM value for pricingType < FREE,PAID,SUBSCRIPTION >");
+        }
 
         FilterCriteria criteria = new FilterCriteria()
                 .setCategory(category)
-                .setPricingType(pricingType)
+                .setPricingType(pricingEnum)
                 .setMinRating(minRating)
                 .setMaxRating(maxRating);
 
         // 🔹 If no filters provided → return all tools
         if (!criteria.hasAnyFilter()) {
-            return userServices.retrieveAllTools();
+            return ResponseEntity.status(HttpStatus.OK).body(userServices.retrieveAllTools());
         }
 
         // 🔹 Otherwise apply filters
-        return filterService.filter(criteria);
+        return ResponseEntity.status(HttpStatus.OK).body(filterService.filter(criteria));
     }
     @GetMapping("/tools/{id}")
-    public Optional<AITool> getToolsById(@PathVariable String id){
-        return userServices.retrievebyid(id);
+    public ResponseEntity<AITool> getToolsById(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(userServices.retrievebyid(id));
     }
 
     @PostMapping("/tools/review")
