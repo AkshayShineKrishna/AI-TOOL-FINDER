@@ -1,17 +1,17 @@
 package com.trumio.task.aitools.controller.admin;
 
 import com.trumio.task.aitools.exceptions.InvalidEnumException;
-import com.trumio.task.aitools.exceptions.InvalidIDException;
 import com.trumio.task.aitools.models.Review;
+import com.trumio.task.aitools.models.ReviewResponse;
 import com.trumio.task.aitools.models.ReviewStatus;
 import com.trumio.task.aitools.services.adminAuth.AdminAuthServices;
 import com.trumio.task.aitools.services.adminManagement.AdminManagementServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/reviews")
@@ -37,17 +37,19 @@ public class AdminReviewController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Review>> retrieveAllReviews(
+    public ResponseEntity<ReviewResponse> retrieveAllReviews(
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @RequestParam(required = false) String status
     ) {
         adminAuthServices.checkAdmin(adminKey);
 
         List<Review> reviews;
+        String message;
 
         if (status == null || status.isBlank()) {
             // No status provided → fetch all reviews
             reviews = adminManagementServices.retrieveAllReviews();
+            message = "No reviews added";
         } else {
             ReviewStatus reviewStatus;
             if (status.equalsIgnoreCase("PENDING")) {
@@ -60,18 +62,25 @@ public class AdminReviewController {
                 throw new InvalidEnumException("Invalid ENUM value for status <PENDING,APPROVED,REJECTED>");
             }
             reviews = adminManagementServices.retrieveAllReviews(reviewStatus);
+            message = "No reviews found with status: ";
         }
-        return ResponseEntity.ok(reviews);
+        if(reviews.isEmpty()){
+            return ResponseEntity.ok(new ReviewResponse("result",message));
+        }
+        return ResponseEntity.ok(new ReviewResponse("result",reviews));
     }
 
     @GetMapping("/tool/{toolId}")
-    public ResponseEntity<List<Review>> retrieveAllReviewsByTool(
+    public ResponseEntity<ReviewResponse> retrieveAllReviewsByTool(
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @PathVariable(required = false) String toolId
     ){
         adminAuthServices.checkAdmin(adminKey);
         List<Review> reviews = adminManagementServices.retrieveReviewByToolId(toolId);
-        return ResponseEntity.ok(reviews);
+        if(reviews.isEmpty()){
+            return ResponseEntity.ok(new ReviewResponse("result", "No reviews available for toolId = " + toolId));
+        }
+        return ResponseEntity.ok(new ReviewResponse("result", reviews));
     }
 
     @GetMapping("/id/{id}")

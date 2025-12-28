@@ -4,6 +4,7 @@ import com.trumio.task.aitools.exceptions.InvalidEnumException;
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.PricingType;
 import com.trumio.task.aitools.models.Review;
+import com.trumio.task.aitools.models.ToolsResponse;
 import com.trumio.task.aitools.services.filterServices.FilterCriteria;
 import com.trumio.task.aitools.services.filterServices.FilterService;
 import com.trumio.task.aitools.services.userServices.UserServicesImpl;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/tools")
-    public ResponseEntity<List<AITool>> getAllAiToolsData(
+    public ResponseEntity<ToolsResponse> getAllAiToolsData(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String pricingType,
             @RequestParam(required = false) Double minRating,
@@ -53,13 +55,21 @@ public class UserController {
                 .setMinRating(minRating)
                 .setMaxRating(maxRating);
 
+        List<AITool> tools;
         // No filters → return all
         if (!criteria.hasAnyFilter()) {
-            return ResponseEntity.ok(userServices.retrieveAllTools());
+            tools = userServices.retrieveAllTools();
+            if(tools.isEmpty()){
+                return ResponseEntity.ok(new ToolsResponse("No Ai tools added yet!, contact admin"));
+            }
+            return ResponseEntity.ok(new ToolsResponse(tools));
         }
 
-        // Apply filters
-        return ResponseEntity.ok(filterService.filter(criteria));
+        tools = filterService.filter(criteria);
+        if(tools.isEmpty()){
+            return ResponseEntity.ok(new ToolsResponse("No AI tools matched your filter criteria. Try adjusting your search."));
+        }
+        return ResponseEntity.ok(new ToolsResponse(tools));
     }
 
     @GetMapping("/tools/{id}")
