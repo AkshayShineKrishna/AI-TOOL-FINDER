@@ -136,10 +136,9 @@ public class AdminManagementServicesImpl implements AdminManagementServices {
         } else {
             throw new InvalidEnumException("Invalid ENUM value for status <PENDING,APPROVED,REJECTED>");
         }
-        ratingServices.calculateRatingsByToolId(review.getToolId());
         review.setStatus(reviewStatus);
         reviewRepository.save(review);
-
+        ratingServices.calculateRatingsByToolId(review.getToolId());
         return review;
     }
 
