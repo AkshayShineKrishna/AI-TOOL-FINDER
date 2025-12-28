@@ -18,7 +18,7 @@ public class AdminToolController {
         this.adminAuthServices = adminAuthServices;
     }
 
-    // ADD TOOL (JSON)
+
     @PostMapping
     public AITool addTool(
             @RequestHeader("X-ADMIN-KEY") String adminKey,

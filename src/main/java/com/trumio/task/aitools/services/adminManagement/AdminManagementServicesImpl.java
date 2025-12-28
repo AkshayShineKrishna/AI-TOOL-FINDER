@@ -3,8 +3,16 @@ package com.trumio.task.aitools.services.adminManagement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.trumio.task.aitools.exceptions.InvalidEnumException;
+import com.trumio.task.aitools.exceptions.InvalidIDException;
 import com.trumio.task.aitools.exceptions.InvalidToolUpdateException;
+import com.trumio.task.aitools.models.Review;
+import com.trumio.task.aitools.models.ReviewStatus;
+import com.trumio.task.aitools.repositories.ReviewRepository;
+import com.trumio.task.aitools.services.ratingServices.RatingServices;
 import org.springframework.stereotype.Service;
 
 import com.trumio.task.aitools.models.AITool;
@@ -15,9 +23,13 @@ import com.trumio.task.aitools.repositories.AIToolRepository;
 public class AdminManagementServicesImpl implements AdminManagementServices {
 
     private final AIToolRepository toolRepository;
+    private final ReviewRepository reviewRepository;
+    private final RatingServices ratingServices;
 
-    public AdminManagementServicesImpl(AIToolRepository toolRepository) {
+    public AdminManagementServicesImpl(AIToolRepository toolRepository, ReviewRepository reviewRepository, RatingServices ratingServices) {
         this.toolRepository = toolRepository;
+        this.reviewRepository = reviewRepository;
+        this.ratingServices = ratingServices;
     }
 
     @Override
@@ -40,7 +52,7 @@ public class AdminManagementServicesImpl implements AdminManagementServices {
                              PricingType pricingType) {
 
         AITool tool = toolRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tool not found"));
+                .orElseThrow(() -> new InvalidIDException("Review with id = " + id + " doesn't exist"));
 
         List<String> errors = new ArrayList<>();
         if (name == null) errors.add("name");
@@ -64,9 +76,73 @@ public class AdminManagementServicesImpl implements AdminManagementServices {
     public void removeTool(String id) {
 
         if (!toolRepository.existsById(id)) {
-            throw new RuntimeException("Tool not found");
+            throw new InvalidIDException("Review with id = " + id + " doesn't exist");
         }
 
         toolRepository.deleteById(id);
     }
+
+    @Override
+    public List<Review> retrieveAllReviews() {
+        return reviewRepository.findAll();
+    }
+
+    @Override
+    public Review retrieveReviewsById(String id) {
+        Optional<Review> reviewOpt = reviewRepository.findById(id);
+        if(reviewOpt.isPresent()){
+            return reviewOpt.get();
+        }else{
+            throw new InvalidIDException("Review with id = " + id + " doesn't exist");
+        }
+    }
+
+    @Override
+    public List<Review> retrieveAllReviews(ReviewStatus status) {
+        List<Review> reviews = reviewRepository.findAll();
+
+        if (status == null) {
+            return reviews;
+        }
+
+        return reviews.stream()
+                .filter(r -> r.getStatus() == status)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Review> retrieveReviewByToolId(String toolId) {
+        if (toolRepository.existsById(toolId)){
+            return reviewRepository.findByToolId(toolId);
+        }else {
+            throw new InvalidIDException("Tool with id = " + toolId + " doesn't exist");
+        }
+
+    }
+
+    @Override
+    public Review changeStatus(String id, String status) {
+
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new InvalidIDException("Review with id = " + id + " doesn't exist"));
+
+        ReviewStatus reviewStatus;
+        if (status.equalsIgnoreCase("PENDING")) {
+            reviewStatus = ReviewStatus.PENDING;
+        } else if (status.equalsIgnoreCase("APPROVED")) {
+            reviewStatus = ReviewStatus.APPROVED;
+            ratingServices.calculateRatingsByToolId(review.getToolId());
+        } else if (status.equalsIgnoreCase("REJECTED")) {
+            reviewStatus = ReviewStatus.REJECTED;
+        } else {
+            throw new InvalidEnumException("Invalid ENUM value for status <PENDING,APPROVED,REJECTED>");
+        }
+
+        review.setStatus(reviewStatus);
+        reviewRepository.save(review);
+
+        return review;
+    }
+
 }
