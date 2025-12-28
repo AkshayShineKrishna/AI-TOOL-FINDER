@@ -78,7 +78,6 @@ public class AdminManagementServicesImpl implements AdminManagementServices {
         if (!toolRepository.existsById(id)) {
             throw new InvalidIDException("Review with id = " + id + " doesn't exist");
         }
-
         toolRepository.deleteById(id);
     }
 
@@ -132,13 +131,12 @@ public class AdminManagementServicesImpl implements AdminManagementServices {
             reviewStatus = ReviewStatus.PENDING;
         } else if (status.equalsIgnoreCase("APPROVED")) {
             reviewStatus = ReviewStatus.APPROVED;
-            ratingServices.calculateRatingsByToolId(review.getToolId());
         } else if (status.equalsIgnoreCase("REJECTED")) {
             reviewStatus = ReviewStatus.REJECTED;
         } else {
             throw new InvalidEnumException("Invalid ENUM value for status <PENDING,APPROVED,REJECTED>");
         }
-
+        ratingServices.calculateRatingsByToolId(review.getToolId());
         review.setStatus(reviewStatus);
         reviewRepository.save(review);
 
