@@ -31,7 +31,7 @@ public class CmdRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // ---- ChatGPT ----
+
         AITool chatGpt = aiToolRepository.findByName("ChatGPT")
                 .orElseGet(() -> {
                     AITool tool = new AITool();
@@ -202,5 +202,6 @@ public class CmdRunner implements CommandLineRunner {
         // ---- Calculate ratings ----
         ratingServices.calculateAllRatings();
         System.out.println("Sample AI tools and reviews verified/inserted successfully.");
+        System.out.println("============== CMD RUNNER FINISHED EXECUTION ===================");
     }
 }

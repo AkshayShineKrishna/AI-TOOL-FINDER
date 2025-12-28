@@ -61,10 +61,10 @@ public class AdminReviewController {
                 throw new InvalidEnumException("Invalid ENUM value for status <PENDING,APPROVED,REJECTED>");
             }
             reviews = adminManagementServices.retrieveAllReviews(reviewStatus);
-            message = "No reviews found with status: ";
+            message = "No reviews found with status: " + status;
         }
         if(reviews.isEmpty()){
-            return ResponseEntity.ok(new ReviewResponse("result",message));
+            return ResponseEntity.ok(new ReviewResponse(message,reviews));
         }
         return ResponseEntity.ok(new ReviewResponse("result",reviews));
     }
@@ -72,7 +72,7 @@ public class AdminReviewController {
     @GetMapping("/tool/{toolId}")
     public ResponseEntity<ReviewResponse> retrieveAllReviewsByTool(
             @RequestHeader("X-ADMIN-KEY") String adminKey,
-            @PathVariable(required = false) String toolId
+            @PathVariable String toolId
     ){
         adminAuthServices.checkAdmin(adminKey);
         List<Review> reviews = adminManagementServices.retrieveReviewByToolId(toolId);

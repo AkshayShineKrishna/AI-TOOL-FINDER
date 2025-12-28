@@ -58,13 +58,14 @@ public class AdminToolController {
 
     // DELETE TOOL
     @DeleteMapping("/{id}")
-    public ResponseEntity<ReviewResponse> deleteTool(
+    public ResponseEntity<Map<String,String>> deleteTool(
             @RequestHeader("X-ADMIN-KEY") String adminKey,
             @PathVariable String id) {
 
         adminAuthServices.checkAdmin(adminKey);
 
         adminManagementServices.removeTool(id);
-        return ResponseEntity.ok( new ReviewResponse("result","Tool with id = " + id + "deleted successfully"));
+        String message = "Tool with id = " + id + " deleted successfully";
+        return ResponseEntity.ok(Map.of("result",message));
     }
 }
