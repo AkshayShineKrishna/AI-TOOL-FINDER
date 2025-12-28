@@ -1,5 +1,6 @@
 package com.trumio.task.aitools.services.userServices;
 
+import com.trumio.task.aitools.exceptions.InvalidIDException;
 import com.trumio.task.aitools.exceptions.InvalidReviewException;
 import com.trumio.task.aitools.models.AITool;
 import com.trumio.task.aitools.models.Review;
@@ -30,8 +31,14 @@ public class UserServicesImpl implements UserServices {
     }
 
     @Override
-    public Optional<AITool> retrievebyid(String id) {
-        return aiToolRepository.findById(id);
+    public AITool retrievebyid(String id) {
+         Optional<AITool> aiToolOpt = aiToolRepository.findById(id);
+         if(aiToolOpt.isPresent()){
+             AITool aiTool = aiToolOpt.get();
+             return aiTool;
+         }else {
+             throw new InvalidIDException("Review with id = " + id + " doesn't exist");
+         }
     }
 
     @Override
