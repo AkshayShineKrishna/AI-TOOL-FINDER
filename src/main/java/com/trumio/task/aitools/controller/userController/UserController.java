@@ -31,15 +31,20 @@ public class UserController {
             @RequestParam(required = false) Double minRating,
             @RequestParam(required = false) Double maxRating
     ) {
-        PricingType pricingEnum;
-        if(pricingType.equalsIgnoreCase("FREE")){
-            pricingEnum = PricingType.FREE;
-        } else if (pricingType.equalsIgnoreCase("PAID")) {
-            pricingEnum = PricingType.PAID;
-        } else if (pricingType.equalsIgnoreCase("SUBSCRIPTION")) {
-            pricingEnum = PricingType.SUBSCRIPTION;
-        }else {
-            throw new InvalidEnumException("Invalid ENUM value for pricingType < FREE,PAID,SUBSCRIPTION >");
+        PricingType pricingEnum = null;
+
+        if (pricingType != null) {
+            if (pricingType.equalsIgnoreCase("FREE")) {
+                pricingEnum = PricingType.FREE;
+            } else if (pricingType.equalsIgnoreCase("PAID")) {
+                pricingEnum = PricingType.PAID;
+            } else if (pricingType.equalsIgnoreCase("SUBSCRIPTION")) {
+                pricingEnum = PricingType.SUBSCRIPTION;
+            } else {
+                throw new InvalidEnumException(
+                        "Invalid ENUM value for pricingType < FREE, PAID, SUBSCRIPTION >"
+                );
+            }
         }
 
         FilterCriteria criteria = new FilterCriteria()
@@ -48,14 +53,15 @@ public class UserController {
                 .setMinRating(minRating)
                 .setMaxRating(maxRating);
 
-        // 🔹 If no filters provided → return all tools
+        // No filters → return all
         if (!criteria.hasAnyFilter()) {
-            return ResponseEntity.status(HttpStatus.OK).body(userServices.retrieveAllTools());
+            return ResponseEntity.ok(userServices.retrieveAllTools());
         }
 
-        // 🔹 Otherwise apply filters
-        return ResponseEntity.status(HttpStatus.OK).body(filterService.filter(criteria));
+        // Apply filters
+        return ResponseEntity.ok(filterService.filter(criteria));
     }
+
     @GetMapping("/tools/{id}")
     public ResponseEntity<AITool> getToolsById(@PathVariable String id){
         return ResponseEntity.status(HttpStatus.OK).body(userServices.retrievebyid(id));
