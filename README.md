@@ -134,12 +134,8 @@ admin.key=your-secure-admin-key-here
 
 ### 4. Generate Admin Key 🔑
 
-Run the AdminKeyGenerator to create a secure admin key:
-```bash
-mvn compile exec:java -Dexec.mainClass="com.trumio.task.aitools.AdminKeyGenerator"
-```
-
-Copy the generated key and update it in your `application-dev.properties` file.
+- Run the AdminKeyGenerator to create a secure admin key from ` src\main\java\com\trumio\task\aitools\ `
+- Copy the generated key and update it in your `application-dev.properties` file.
 
 ## ⚙️ Configuration
 
