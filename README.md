@@ -1,4 +1,4 @@
-# 🤖 AI Tools Management System
+# AI Tools Management System
 
 A Spring Boot REST API application for managing AI tools with user reviews and admin moderation capabilities. The system allows users to browse AI tools, submit reviews, and provides admin functionality for tool and review management.
 
