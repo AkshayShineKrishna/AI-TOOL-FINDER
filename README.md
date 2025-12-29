@@ -5,7 +5,7 @@ A Spring Boot REST API application for managing AI tools with user reviews and a
 ## Table of Contents
 
 - [Problem Statement](#problem-statement)
-- [Additional Enhancements Implemented](#-additional-enhancements-implemented-beyond-requirements)
+- [Additional Enhancements Implemented](#additional-enhancements-implemented-beyond-requirements)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
@@ -16,7 +16,7 @@ A Spring Boot REST API application for managing AI tools with user reviews and a
 - [API Documentation](#api-documentation)
 - [Endpoints](#endpoints)
 - [Data Models](#data-models)
-- [Admin Authentication](#admin-authentication)
+- [Admin Authentication](#admin-authentication-1)
 
 ## Problem Statement
 
