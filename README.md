@@ -2,7 +2,7 @@
 
 A Spring Boot REST API application for managing AI tools with user reviews and admin moderation capabilities. The system allows users to browse AI tools, submit reviews, and provides admin functionality for tool and review management.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Problem Statement](#problem-statement)
 - [Additional Enhancements Implemented](#-additional-enhancements-implemented-beyond-requirements)
@@ -24,7 +24,7 @@ With the rapid growth of AI tools, users need a reliable backend system to disco
 
 The system focuses on clean API design, proper data management, business logic implementation, and admin-level control, simulating a real-world backend application without any frontend interface.
 
-## 🚀 Additional Enhancements Implemented (Beyond Requirements)
+## Additional Enhancements Implemented (Beyond Requirements)
 
 ### 1. Global Exception Handling
 - Implemented centralized exception handling using: `@ControllerAdvice`
@@ -43,33 +43,33 @@ The system focuses on clean API design, proper data management, business logic i
 - Ensures public users cannot access admin endpoints
 - Simple yet effective security for backend-only systems
 
-## ✨ Features
+## Features
 
-### 👥 User Features
+### User Features
 - Browse AI tools with filtering capabilities
 - Filter tools by category, pricing type, and rating range
 - View detailed information about specific AI tools
 - Submit reviews for AI tools (pending admin approval)
 
-### 🔧 Admin Features
+### Admin Features
 - Add, update, and delete AI tools
 - Manage review moderation (approve/reject reviews)
 - View all reviews with filtering by status
 - View reviews by specific tool ID
 - Secure admin authentication using API keys
 
-## 🛠️ Technology Stack
+## Technology Stack
 
-- **Framework**: Spring Boot 4.0.1 ☕
-- **Language**: Java 21 ☕
-- **Database**: MongoDB 🍃
-- **Documentation**: SpringDoc OpenAPI (Swagger UI) 📚
-- **Build Tool**: Maven 🔨
-- **Development Tools**: Spring Boot DevTools 🔄
-- **IDE**: IntelliJ IDEA 💡
-- **API Testing**: Postman 📮
+- **Framework**: Spring Boot 4.0.1 
+- **Language**: Java 21 
+- **Database**: MongoDB 
+- **Documentation**: SpringDoc OpenAPI (Swagger UI) 
+- **Build Tool**: Maven 
+- **Development Tools**: Spring Boot DevTools 
+- **IDE**: IntelliJ IDEA 
+- **API Testing**: Postman 
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -96,39 +96,39 @@ src/
 └── test/ # Test classes
 ```
 
-## ✅ Prerequisites
+## Prerequisites
 
-- Java 21 or higher ☕
-- Maven 3.6+ 🔨
-- MongoDB 4.4+ (running locally or accessible remotely) 🍃
-- Git (for cloning the repository) 📂
-- IntelliJ IDEA (recommended IDE) 💡
-- Postman (for API testing) 📮
+- Java 21 or higher 
+- Maven 3.6+ 
+- MongoDB 4.4+ (running locally or accessible remotely) 
+- Git (for cloning the repository) 
+- IntelliJ IDEA (recommended IDE) 
+- Postman (for API testing) 
 
-## 🚀 Setup and Installation
+## Setup and Installation
 
-### 1. Clone the Repository 📥
+### 1. Clone the Repository 
 
 ```bash
 git clone https://github.com/AkshayShineKrishna/AI-TOOL-FINDER.git
 cd AI-TOOL-FINDER
 ```
 
-### 2. Install MongoDB 🍃
+### 2. Install MongoDB 
 
-**Windows:** 🪟
+**Windows:** 
 - Download MongoDB Community Server from [MongoDB Download Center](https://www.mongodb.com/try/download/community)
 - Follow the installation wizard
 - Start MongoDB service
 
-**macOS (using Homebrew):** 🍎
+**macOS (using Homebrew):** 
 ```bash
 brew tap mongodb/brew
 brew install mongodb-community
 brew services start mongodb/brew/mongodb-community
 ```
 
-**Linux (Ubuntu/Debian):** 🐧
+**Linux (Ubuntu/Debian):** 
 ```bash
 sudo apt-get update
 sudo apt-get install -y mongodb
@@ -136,11 +136,11 @@ sudo systemctl start mongodb
 sudo systemctl enable mongodb
 ```
 
-### 3. Configure the Application ⚙️
+### 3. Configure the Application 
 
 Copy the development configuration template:
 ```bash
-cp src/main/resources/application-dev.properties.template src/main/resources/application-dev.properties
+cp src/main/resources/application-dev.properties src/main/resources/application-dev.properties
 ```
 
 Edit `src/main/resources/application-dev.properties`:
@@ -158,14 +158,14 @@ logging.level.org.springframework.data.mongodb=DEBUG
 admin.key=your-secure-admin-key-here
 ```
 
-### 4. Generate Admin Key 🔑
+### 4. Generate Admin Key 
 
 - Run the AdminKeyGenerator to create a secure admin key from ` src\main\java\com\trumio\task\aitools\ `
 - Copy the generated key and update it in your `application-dev.properties` file.
 
-## ⚙️ Configuration
+## Configuration
 
-### Database Configuration 🍃
+### Database Configuration
 
 The application uses MongoDB as the primary database. Configure the connection in `application-dev.properties`:
 
@@ -173,13 +173,13 @@ The application uses MongoDB as the primary database. Configure the connection i
 - `spring.data.mongodb.port`: MongoDB port (default: 27017)
 - `spring.data.mongodb.database`: Database name
 
-### Admin Authentication 🔐
+### Admin Authentication
 
 Admin endpoints require authentication using the `X-ADMIN-KEY` header. The key is configured in the properties file and should be kept secure in production environments.
 
-## ▶️ Running the Application
+## Running the Application
 
-### Using Maven 🔨
+### Using Maven
 
 ```bash
 # Clean and compile
@@ -189,19 +189,19 @@ mvn clean compile
 mvn spring-boot:run
 ```
 
-### Using Maven Wrapper (if available) 📦
+### Using Maven Wrapper (if available)
 
-**Windows:** 🪟
+**Windows:**
 ```cmd
 mvnw.cmd spring-boot:run
 ```
 
-**Linux/macOS:** 🐧🍎
+**Linux/macOS:** 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-### Using JAR 📦
+### Using JAR 
 
 ```bash
 # Build the JAR
@@ -211,20 +211,20 @@ mvn clean package
 java -jar target/aitools-0.0.1-SNAPSHOT.jar
 ```
 
-The application will start on `http://localhost:8080` 🌐
+The application will start on `http://localhost:8080`
 
-## 📚 API Documentation
+## API Documentation
 
 Once the application is running, you can access the interactive API documentation:
 
-- **Swagger UI**: http://localhost:8080/swagger-ui.html 📖
-- **OpenAPI JSON**: http://localhost:8080/v3/api-docs 📄
+- **Swagger UI**: http://localhost:8080/swagger-ui.html 
+- **OpenAPI JSON**: http://localhost:8080/v3/api-docs 
 
-## 🛣️ Endpoints
+## Endpoints
 
-### 👥 User Endpoints
+### User Endpoints
 
-#### Get All AI Tools 🔍
+#### Get All AI Tools
 ```http
 GET /tools
 ```
@@ -240,12 +240,12 @@ GET /tools
 GET /tools?category=productivity&pricingType=FREE&minRating=4.0
 ```
 
-#### Get Tool by ID 🆔
+#### Get Tool by ID 
 ```http
 GET /tools/{id}
 ```
 
-#### Submit Review ⭐
+#### Submit Review 
 ```http
 POST /tools/review
 Content-Type: application/json
@@ -257,13 +257,13 @@ Content-Type: application/json
 }
 ```
 
-### 🔧 Admin Endpoints
+### Admin Endpoints
 
-All admin endpoints require the `X-ADMIN-KEY` header. 🔑
+All admin endpoints require the `X-ADMIN-KEY` header. 
 
-#### Tool Management 🛠️
+#### Tool Management 
 
-**Add Tool:** ➕
+**Add Tool:** 
 ```http
 POST /admin/tools
 X-ADMIN-KEY: your-admin-key
@@ -277,7 +277,7 @@ Content-Type: application/json
 }
 ```
 
-**Update Tool:** ✏️
+**Update Tool:** 
 ```http
 PATCH /admin/tools/{id}
 X-ADMIN-KEY: your-admin-key
@@ -291,15 +291,15 @@ Content-Type: application/json
 }
 ```
 
-**Delete Tool:** 🗑️
+**Delete Tool:** 
 ```http
 DELETE /admin/tools/{id}
 X-ADMIN-KEY: your-admin-key
 ```
 
-#### Review Management 📝
+#### Review Management 
 
-**Get All Reviews:** 📋
+**Get All Reviews:** 
 ```http
 GET /admin/reviews
 X-ADMIN-KEY: your-admin-key
@@ -369,7 +369,7 @@ Status values: `PENDING`, `APPROVED`, `REJECTED`
 - `APPROVED`: Approved by admin
 - `REJECTED`: Rejected by admin
 
-## 📊 Average Rating Calculation
+## Average Rating Calculation
 
 The system automatically calculates and maintains average ratings for AI tools based on approved user reviews:
 
@@ -395,7 +395,7 @@ Average = (5 + 4 + 5 + 3 + 4) / 5 = 21 / 5 = 4.2
 
 The rating calculation service automatically handles this process in the background, ensuring data consistency across the application.
 
-## 🔍 Filter Services
+## Filter Services
 
 The application provides comprehensive filtering capabilities for AI tools through dedicated filter services:
 
