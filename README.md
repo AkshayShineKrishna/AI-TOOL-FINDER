@@ -4,6 +4,8 @@ A Spring Boot REST API application for managing AI tools with user reviews and a
 
 ## 📋 Table of Contents
 
+- [Problem Statement](#problem-statement)
+- [Additional Enhancements Implemented](#-additional-enhancements-implemented-beyond-requirements)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Project Structure](#project-structure)
@@ -15,7 +17,31 @@ A Spring Boot REST API application for managing AI tools with user reviews and a
 - [Endpoints](#endpoints)
 - [Data Models](#data-models)
 - [Admin Authentication](#admin-authentication)
-- [Development](#development)
+
+## Problem Statement
+
+With the rapid growth of AI tools, users need a reliable backend system to discover, evaluate, and compare tools based on functionality, pricing, and quality. The goal of this project is to design and implement a backend-only AI Tool Finder platform that allows users to browse and filter AI tools, submit reviews, and view automatically calculated ratings, while enabling administrators to manage tools and moderate user reviews.
+
+The system focuses on clean API design, proper data management, business logic implementation, and admin-level control, simulating a real-world backend application without any frontend interface.
+
+## 🚀 Additional Enhancements Implemented (Beyond Requirements)
+
+### 1. Global Exception Handling
+- Implemented centralized exception handling using: `@ControllerAdvice`
+- Custom exception classes 
+- Provides Clear error messages with Proper HTTP status codes
+
+### 2. Swagger API Documentation
+- Integrated Swagger / OpenAPI
+- Automatically generates interactive API documentation
+
+### 3. Review Filtering by Status
+- Extended review APIs to allow filtering based on review status: `Pending , Approved , Rejected`
+
+### 4. Header-Based Authentication
+- Implemented custom header-based authentication for admin APIs
+- Ensures public users cannot access admin endpoints
+- Simple yet effective security for backend-only systems
 
 ## ✨ Features
 
