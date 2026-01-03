@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/tools")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminToolController {
 
     private final AdminManagementServices adminManagementServices;

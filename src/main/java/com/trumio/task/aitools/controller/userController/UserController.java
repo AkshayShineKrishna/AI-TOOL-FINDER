@@ -8,6 +8,7 @@ import com.trumio.task.aitools.models.ToolsResponse;
 import com.trumio.task.aitools.services.filterServices.FilterCriteria;
 import com.trumio.task.aitools.services.filterServices.FilterService;
 import com.trumio.task.aitools.services.userServices.UserServicesImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/tools")
+    @CrossOrigin(origins = "http://localhost:5173")
     public ResponseEntity<ToolsResponse> getAllAiToolsData(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String pricingType,
@@ -78,7 +80,8 @@ public class UserController {
     }
 
     @PostMapping("/tools/review")
-    public ResponseEntity<Review> addReview(@RequestBody Review review) {
+    public ResponseEntity<Review> addReview(
+            @Valid @RequestBody Review review) {
         userServices.addReview(review);
         return ResponseEntity.status(HttpStatus.CREATED).body(review);
     }

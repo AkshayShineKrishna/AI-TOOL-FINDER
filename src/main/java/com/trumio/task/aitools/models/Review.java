@@ -2,6 +2,7 @@ package com.trumio.task.aitools.models;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,9 +11,9 @@ public class Review {
 
     @Id
     private String id;
-
     private String toolId;
     private Integer rating; // 1–5
+    @Size(min = 5, max = 50)
     private String comment;
     private ReviewStatus status;
     private LocalDateTime createdAt;

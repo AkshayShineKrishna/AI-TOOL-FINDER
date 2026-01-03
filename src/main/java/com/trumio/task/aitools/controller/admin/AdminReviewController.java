@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/reviews")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdminReviewController {
 
     private final AdminAuthServices adminAuthServices;
